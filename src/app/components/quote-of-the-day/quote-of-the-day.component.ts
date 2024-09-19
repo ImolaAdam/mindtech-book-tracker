@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 
 @Component({
@@ -8,7 +8,10 @@ import { MatCardModule } from '@angular/material/card';
   templateUrl: './quote-of-the-day.component.html',
   styleUrl: './quote-of-the-day.component.scss',
 })
-export class QuoteOfTheDayComponent {
+export class QuoteOfTheDayComponent implements OnInit {
+  isQuoteAssigned = false; // Flag to check if colors are assigned
+  quote: string = '';
+
   readonly quotes: string[] = [
     'The only way to do great work is to love what you do. — Steve Jobs',
     'In the end, we will remember not the words of our enemies, but the silence of our friends. — Martin Luther King Jr.',
@@ -34,10 +37,19 @@ export class QuoteOfTheDayComponent {
 
   constructor() {}
 
+  ngOnInit(): void {
+    this.quote = this.getRandomQuote(this.quotes);
+  }
+
   // Getting random index from the quotes array (same as the cover generation on the BookList)
   getRandomQuote(quotes: string[]): string {
-    const randomIndex = Math.floor(Math.random() * quotes.length);
-
-    return quotes[randomIndex];
+    if (this.isQuoteAssigned != true) {
+      const randomIndex = Math.floor(Math.random() * quotes.length);
+      this.isQuoteAssigned = true;
+      this.quote = quotes[randomIndex];
+      return this.quote;
+    } else {
+      return '';
+    }
   }
 }

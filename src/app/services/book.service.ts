@@ -18,7 +18,7 @@ export class BookService {
 
   constructor() {}
 
-  // Fetch the books from local storage
+  // Fetch the books from local storage, emit value
   getBooks(): Book[] {
     const books = localStorage.getItem(this.localStorageKey);
     this.bookListChangedSubject.next(
@@ -28,6 +28,7 @@ export class BookService {
     return books ? JSON.parse(books) : this.generateBooks();
   }
 
+  // Generate books so the list will not be empty
   private generateBooks(): Book[] {
     const books: Book[] = [
       {

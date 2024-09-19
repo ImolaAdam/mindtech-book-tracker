@@ -9,6 +9,7 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatCardModule } from '@angular/material/card';
 import { Subscription } from 'rxjs';
 import { MatChipsModule } from '@angular/material/chips';
+import { QuoteOfTheDayComponent } from "../quote-of-the-day/quote-of-the-day.component";
 
 @Component({
   selector: 'app-book-list',
@@ -21,7 +22,8 @@ import { MatChipsModule } from '@angular/material/chips';
     MatDividerModule,
     MatCardModule,
     MatChipsModule,
-  ],
+    QuoteOfTheDayComponent
+],
   templateUrl: './book-list.component.html',
   styleUrl: './book-list.component.scss',
 })
