@@ -7,14 +7,23 @@ import { BehaviorSubject } from 'rxjs';
 })
 export class BookService {
   private localStorageKey = 'books';
+
+  private bookListChangedSubject = new BehaviorSubject<Book[]>([]);
+  bookList$ = this.bookListChangedSubject.asObservable();
+
   private filtersSubject = new BehaviorSubject<string[]>([]);
   filters$ = this.filtersSubject.asObservable();
+
+  private filters: string[] = [];
 
   constructor() {}
 
   // Fetch the books from local storage
   getBooks(): Book[] {
     const books = localStorage.getItem(this.localStorageKey);
+    this.bookListChangedSubject.next(
+      books ? JSON.parse(books) : this.generateBooks()
+    );
 
     return books ? JSON.parse(books) : this.generateBooks();
   }
@@ -60,9 +69,10 @@ export class BookService {
 
   // Add a new book to local storage
   addBook(book: Book): void {
-    const books = this.getBooks();
+    let books = this.getBooks();
     books.push(book);
     this.saveBooks(books);
+    books = this.getBooks();
   }
 
   // Update a book's status in local storage
@@ -72,6 +82,7 @@ export class BookService {
     if (bookIndex !== -1) {
       books[bookIndex].status = status;
       this.saveBooks(books);
+      this.getBooks();
     }
   }
 
@@ -80,6 +91,7 @@ export class BookService {
     let books = this.getBooks();
     books = books.filter((book) => book.id !== id);
     this.saveBooks(books);
+    this.getBooks();
   }
 
   // Save the list of books to local storage
@@ -88,6 +100,7 @@ export class BookService {
   }
 
   setFilters(selectedFilters: string[]): void {
+    this.filters = selectedFilters;
     this.filtersSubject.next(selectedFilters);
   }
 }

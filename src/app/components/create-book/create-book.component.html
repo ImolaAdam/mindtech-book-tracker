@@ -1,0 +1,37 @@
+<div class="dialog-container">
+  <h2 mat-dialog-title>Add New Book</h2>
+  <form [formGroup]="bookForm" (ngSubmit)="onSave()">
+    <mat-dialog-content class="d-flex flex-column">
+      <mat-form-field appearance="fill">
+        <mat-label>Title</mat-label>
+        <input matInput formControlName="title" />
+        <mat-error *ngIf="bookForm.get('title')?.hasError('required')">
+          Title is required
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Author</mat-label>
+        <input matInput formControlName="author" />
+        <mat-error *ngIf="bookForm.get('author')?.hasError('required')">
+          Author is required
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Status</mat-label>
+        <mat-select formControlName="status">
+          <mat-option value="Read">Read</mat-option>
+          <mat-option value="Want to Read">Want to Read</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </mat-dialog-content>
+
+    <mat-dialog-actions>
+      <button mat-button (click)="onCancel()">Close</button>
+      <button mat-button type="submit" [disabled]="bookForm.invalid">
+        Add
+      </button>
+    </mat-dialog-actions>
+  </form>
+</div>
