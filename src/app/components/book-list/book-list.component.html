@@ -1,0 +1,21 @@
+<mat-card appearance="outlined">
+  <mat-card-content>
+    <mat-list role="list" *ngFor="let book of filteredBooks">
+      <mat-list-item class="h-100">
+        <div class="d-flex align-items-center">
+          <div
+            class="cover d-flex align-items-center justify-content-center me-2"
+          >
+            {{ book.title.charAt(0) }}
+          </div>
+          <div>{{ book.title }} - {{ book.author }}</div>
+        </div>
+
+        <button mat-icon-button aria-label="delete">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </mat-list-item>
+      <mat-divider class="mt-2"></mat-divider>
+    </mat-list>
+  </mat-card-content>
+</mat-card>
